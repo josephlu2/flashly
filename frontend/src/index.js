@@ -4,14 +4,17 @@ import './index.css';
 import App from './App';
 import { SetsContextProvider } from './context/SetContext'
 import { AuthContextProvider } from './context/AuthContext'
+import { ChakraProvider } from '@chakra-ui/react'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AuthContextProvider>
-      <SetsContextProvider>
-        <App /> 
-      </SetsContextProvider>
-    </AuthContextProvider>
+    <ChakraProvider>
+      <AuthContextProvider>
+        <SetsContextProvider>
+          <App /> 
+        </SetsContextProvider>
+      </AuthContextProvider>
+    </ChakraProvider>
   </React.StrictMode>
 );

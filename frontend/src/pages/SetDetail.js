@@ -4,6 +4,7 @@ import { useParams, Navigate, useNavigate } from "react-router-dom";
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { useEffect, useState } from 'react'
 import Flashcard from '../components/Flashcard'
+import ModeSelect from "../components/ModeSelect";
 
 const SetDetail = () => {
     const { id } = useParams();
@@ -46,7 +47,14 @@ const SetDetail = () => {
                 <div className="set-details-container">
                     <h2>{set.title}</h2>
                     <h3>{set.desc}</h3>
-                    <Flashcard dataSource = {cards}/>
+                    <div className = "flashcards-row">
+                        <div className = "flashcard">
+                            <Flashcard dataSource = {cards}/>
+                        </div>
+                        <div className = "modes">
+                            <ModeSelect />
+                        </div>
+                    </div>
                 </div>
             )}
             
