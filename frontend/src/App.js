@@ -7,6 +7,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Navbar from './components/Navbar'
 import SetDetail from './pages/SetDetail'
+import CreateSet from './pages/CreateSet'
 
 function App() {
   const { user } = useAuthContext()
@@ -32,6 +33,10 @@ function App() {
             <Route 
               path = '/sets/:id'
               element = {user ? <SetDetail />  : <SetDetail />}
+            />
+            <Route 
+              path = '/create'
+              element = {user ? <CreateSet />  : <Navigate to="/login"/>}
             />
             
           </Routes>

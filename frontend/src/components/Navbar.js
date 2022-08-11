@@ -34,9 +34,12 @@ export default function Navbar(props) {
         <Flex pr = "5" pt = "1">
           {user && (
             <div>
-              <span>{user.email}</span>
+              <Link to="/create">
+                <Button variant="solid" colorScheme = "green">Create Set</Button>
+              </Link>
               <Button variant="solid" colorScheme = "pink" ml = "5" onClick = {handleClick}>Log out</Button>
             </div>
+            
           )}
           {!user && (
             <div>
