@@ -32,18 +32,18 @@ const getSet = async (req, res) => {
 
 // create new set
 const createSet = async (req, res) => {
-    const {title, load, reps} = req.body
+    const {title, desc, cards} = req.body
 
     let emptyFields = []
 
     if (!title) {
         emptyFields.push('title')
     }
-    if(!load) {
-        emptyFields.push('load')
+    if(!desc) {
+        emptyFields.push('desc')
     }
-    if(!reps) {
-        emptyFields.push('reps')
+    if(!cards) {
+        emptyFields.push('cards')
     }
     if(emptyFields.length > 0) {
         return res.status(400).json({error: "Please fill in all the fields", emptyFields})
@@ -52,7 +52,7 @@ const createSet = async (req, res) => {
     // add doc to db
     try {
         const user_id = req.user._id
-        const set = await Set.create({title, load, reps, user_id})
+        const set = await Set.create({title, desc, cards, user_id})
         res.status(200).json(set)
     } catch (error) {
         res.status(400).json({error: error.message})

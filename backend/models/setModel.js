@@ -7,12 +7,12 @@ const setSchema = new Schema({
         type: String,
         required: true
     },
-    reps: {
-        type: Number,
+    desc: {
+        type: String,
         required: true
     },
-    load: {
-        type: Number,
+    cards: {
+        type: Object,
         required: true
     },
     user_id: {
