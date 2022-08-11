@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useSetsContext } from '../hooks/useSetsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
+import { Link } from 'react-router-dom'
 
 // components
 import SetDetails from '../components/SetDetails'
@@ -37,7 +38,11 @@ const Home = () => {
         <div className="home">
             <div className="sets">
                 {sets && sets.map((set) => (
-                    <SetDetails key = {set._id} set = {set}/>
+                    <div key = {set._id}>
+                        <Link to={`sets/${set._id}`}>
+                            <SetDetails key = {set._id} set = {set}/>
+                        </Link>
+                    </div>
                 ))}
             </div>
             <SetForm />
