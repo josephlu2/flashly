@@ -28,8 +28,7 @@ const SetDetails = ({ set }) => {
     return (
         <div className="set-details">
             <h4>{set.title}</h4>
-            <p><strong>Title 1: </strong> {set.load} </p>
-            <p><strong>Title 2: </strong> {set.reps} </p>
+            <p><strong></strong> {set.desc} </p>
             <p>{formatDistanceToNow(new Date(set.createdAt), { addSuffix: true})}</p>
             <span className = "material-symbols-outlined" onClick = {handleClick}>delete</span>
         </div>

@@ -8,20 +8,43 @@ const SetForm = () => {
     const { user } = useAuthContext()
 
     const [title, setTitle] = useState('')
-    const [load, setLoad] = useState('')
-    const [reps, setReps] = useState('')
+    const [desc, setDesc] = useState('')
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
+    const [cards, setCards] = useState([{ term: "", definition: "" }]);
+
+    const handleFormChange = (event, index) => {
+      let data = [...cards];
+      data[index][event.target.name] = event.target.value;
+      setCards(data);
+    };
+
+    const addFields = () => {
+      let object = {
+        term: "",
+        definition: ""
+      };
+  
+      setCards([...cards, object]);
+    };
+
+    const removeFields = (index) => {
+      let data = [...cards];
+      data.splice(index, 1);
+      setCards(data);
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        console.log(cards);
 
         if (!user) {
           setError('You must be logged in')
           return
         }
     
-        const set = {title, load, reps}
+        const set = {title, desc, cards}
         
         const response = await fetch('/api/sets', {
           method: 'POST',
@@ -40,8 +63,8 @@ const SetForm = () => {
         if (response.ok) {
           setError(null)
           setTitle('')
-          setLoad('')
-          setReps('')
+          setDesc('')
+          setCards([{ term: "", definition: "" }])
           setEmptyFields([])
           console.log('new set added:', json)
           dispatch({type: 'CREATE_SET', payload: json})
@@ -53,7 +76,7 @@ const SetForm = () => {
         <form className="create" onSubmit = { handleSubmit }>
             <h3>Add a New Set</h3>
 
-            <label>Title 1:</label>
+            <label>Title:</label>
             <input 
                 type="text" 
                 onChange = {(e) => setTitle(e.target.value)} 
@@ -61,23 +84,37 @@ const SetForm = () => {
                 className = {emptyFields.includes('title') ? 'error' : ''}
             />
 
-            <label>Title 2:</label>
+            <label>Desc:</label>
             <input 
-                type="number" 
-                onChange = {(e) => setLoad(e.target.value)}
-                value = {load}
-                className = {emptyFields.includes('load') ? 'error' : ''}
+                type="text" 
+                onChange = {(e) => setDesc(e.target.value)}
+                value = {desc}
+                className = {emptyFields.includes('desc') ? 'error' : ''}
             />
 
-            <label>Title 3:</label>
-            <input 
-                type="number" 
-                onChange = {(e) => setReps(e.target.value)}
-                value = {reps}
-                className = {emptyFields.includes('reps') ? 'error' : ''}
-            />
+            {cards.map((form, index) => {
+                return (
+                  <div key={index}>
+                    <input
+                      name="term"
+                      placeholder="Term"
+                      onChange={(event) => handleFormChange(event, index)}
+                      value={form.term}
+                    />
+                    <input
+                      name="definition"
+                      placeholder="Definition"
+                      onChange={(event) => handleFormChange(event, index)}
+                      value={form.definition}
+                    />
+                    <button type = "button" onClick={() => removeFields(index)}>Remove</button>
+                  </div>
+                );
+            })}
+                
+            <button type="button" onClick = {addFields}>Add Card</button>
 
-            <button>Add Set</button>
+            <button>Complete Submit</button>
             {error && <div className="error">{error}</div>}
         </form>
     )
