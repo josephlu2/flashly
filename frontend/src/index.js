@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { SetsContextProvider } from './context/SetContext'
+import { CurrentSetContextProvider } from './context/CurrentSetContext';
 import { AuthContextProvider } from './context/AuthContext'
 import { ChakraProvider } from '@chakra-ui/react'
 
@@ -12,7 +13,9 @@ root.render(
     <ChakraProvider>
       <AuthContextProvider>
         <SetsContextProvider>
-          <App /> 
+          <CurrentSetContextProvider>
+            <App /> 
+          </CurrentSetContextProvider>
         </SetsContextProvider>
       </AuthContextProvider>
     </ChakraProvider>

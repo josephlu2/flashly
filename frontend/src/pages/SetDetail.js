@@ -1,5 +1,5 @@
-import { useSetsContext } from "../hooks/useSetsContext"
 import { useAuthContext } from '../hooks/useAuthContext'
+import { useCurrentSetContext } from "../hooks/useCurrentSetContext"
 import { useParams, Navigate, useNavigate } from "react-router-dom";
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { useEffect, useState } from 'react'
@@ -14,7 +14,7 @@ import {
 
 const SetDetail = () => {
     const { id } = useParams();
-    const { dispatch } = useSetsContext()
+    const { dispatch } = useCurrentSetContext()
     const { user } = useAuthContext()
     const [ set, setSet ] = useState(null)
     const [ cards, setCards ] = useState([])
@@ -32,17 +32,14 @@ const SetDetail = () => {
             if (response.ok) {
                 setSet(json)
                 setCards(json.cards.map(({term, definition}) => ({ front: {text: term},  back: {text: definition}})))
+                dispatch({type: 'SET_SET', payload: json.cards})
             } else {
                 navigate('/')
             }
         }
 
         fetchSet()
-        if (user) {
-            fetchSet()
-        } else {
-            navigate('/')
-        }
+
         
     }, [dispatch, user, id])
 

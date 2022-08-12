@@ -10,9 +10,13 @@ const ModeSelect = () => {
   
   return (
     <Flex flexDir = "column" mt = "16" mr = "8">
-      <Box flex="1" p={4} mb = {4} borderWidth = "3px" borderColor='black' borderRadius = "10">
-        <Heading textAlign = "center" as="h3" size="2xl">Flashcard Mode</Heading>
-      </Box>
+
+      <Link to="./flashcard">
+        <Box flex="1" p={4} mb = {4} borderWidth = "3px" borderColor='black' borderRadius = "10">
+          <Heading textAlign = "center" as="h3" size="2xl">Flashcard Mode</Heading>
+        </Box>
+      </Link>
+
       <Box flex="1" p={4} mb = {4} borderWidth = "3px" borderColor='black'   borderRadius = "10">
         <Heading textAlign = "center" as="h3" size="2xl">Write Mode</Heading>
       </Box>

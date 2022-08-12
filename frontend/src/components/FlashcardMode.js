@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ReactCardFlip from 'react-card-flip'
+import { useParams, Navigate, useNavigate } from "react-router-dom";
 
-export const FlashcardMode = ({ dataSource = [], flipDirection, onSound, onChange, onFinish }) => {
+export const FlashcardMode = ({ dataSource = [], flipDirection, onSound, onChange, onFinish, shuffle, flip }) => {
   const [step, setStep] = useState(1)
   const [side, setSide] = useState("front")
   const [isFinish, setIsFinish] = useState(false)
+  const [data, setData] = useState(dataSource)
+  const navigate = useNavigate();
+
 
   const handleChangeSide = () => {
     const newSide = side === "front" ? "back" : "front"
@@ -21,7 +25,7 @@ export const FlashcardMode = ({ dataSource = [], flipDirection, onSound, onChang
   }
 
   const handleNext = () => {
-    const max = dataSource.length
+    const max = data.length
     setIsFinish(step + 1 > max)
     const nextStep = step < max ? step + 1 : max
     setSide("front")
@@ -30,7 +34,7 @@ export const FlashcardMode = ({ dataSource = [], flipDirection, onSound, onChang
   }
 
   const handleSpeaker = () => {
-    const text = dataSource[step - 1][side].text
+    const text = data[step - 1][side].text
     const utterance = new SpeechSynthesisUtterance(text);
     window.speechSynthesis.speak(utterance);
     onSound(text)
@@ -42,21 +46,25 @@ export const FlashcardMode = ({ dataSource = [], flipDirection, onSound, onChang
     setIsFinish(false)
   }
 
+  const handleFinish = () => {
+    navigate(-1)
+  }
+
   return (
     <div style={Styles.container}>
       {
         isFinish ? (
           <div style={Styles.finishContainer}>
             <h2 style={{ marginTop: 0, marginBottom: 10 }}>Great job!</h2>
-            <p style={{ margin: 0 }}>You just studied {dataSource.length} term!</p>
+            <p style={{ margin: 0 }}>You just studied {data.length} term!</p>
             <button style={Styles.startOverButton} onClick={handleStartOver}>Start over</button>
-            <button style={Styles.startOverButton} onClick={onFinish}>Finish</button>
+            <button style={Styles.startOverButton} onClick={handleFinish}>Finish</button>
           </div>
         ) : (
           <div>
             <div style={Styles.progress}>
               <div style={Styles.bar}>
-                <span style={{ ...Styles.complete, width: `${step / dataSource.length * 100}%` }}></span>
+                <span style={{ ...Styles.complete, width: `${step / data.length * 100}%` }}></span>
               </div>
 
             </div>
@@ -66,15 +74,15 @@ export const FlashcardMode = ({ dataSource = [], flipDirection, onSound, onChang
                 <ReactCardFlip containerStyle={{ height: "100%" }} isFlipped={side === "back"} flipDirection={flipDirection}>
                   <div style={Styles.cardContent}>
                     {
-                      dataSource[step - 1]?.front?.image && <img width="40%" height="40%" src={dataSource[step - 1]?.front?.image} />
+                      data[step - 1]?.front?.image && <img width="40%" height="40%" src={data[step - 1]?.front?.image} />
                     }
-                    <p>{dataSource[step - 1]?.front?.text}</p>
+                    <p>{data[step - 1]?.front?.text}</p>
                   </div>
                   <div style={Styles.cardContent}>
                     {
-                      dataSource[step - 1]?.back?.image && <img width="40%" height="40%" src={dataSource[step - 1]?.back?.image} />
+                      data[step - 1]?.back?.image && <img width="40%" height="40%" src={data[step - 1]?.back?.image} />
                     }
-                    <p>{dataSource[step - 1]?.back?.text}</p>
+                    <p>{data[step - 1]?.back?.text}</p>
                   </div>
                 </ReactCardFlip>
               </div>
@@ -84,7 +92,7 @@ export const FlashcardMode = ({ dataSource = [], flipDirection, onSound, onChang
                 <img width="75%" height="50%" src="https://alpenglow-public-photos.s3.amazonaws.com/left-chevron-svgrepo-com.svg" />
               </div>
               <div style={Styles.number}>
-                {`${step}/${dataSource?.length}`}
+                {`${step}/${data?.length}`}
               </div>
               <div style={Styles.nextButton} onClick={handleNext}>
                 <img width="75%" height="50%" src="https://alpenglow-public-photos.s3.amazonaws.com/right-chevron-svgrepo-com-2.svg" />
@@ -97,19 +105,19 @@ export const FlashcardMode = ({ dataSource = [], flipDirection, onSound, onChang
   )
 }
 
-Flashcard.propTypes = {
-  dataSource: PropTypes.array.isRequired,
+FlashcardMode.propTypes = {
+  data: PropTypes.array.isRequired,
   flipDirection: PropTypes.string,
   onChange: PropTypes.func,
   onSound: PropTypes.func,
   onFinish: PropTypes.func,
 }
 
-Flashcard.defaultProps = {
-  flipDirection: "horizontal",
+FlashcardMode.defaultProps = {
+  flipDirection: "vertical",
   onChange: (step, size) => { },
   onSound: (text) => { },
-  onFinish: () => { },
+  onFinish: () => {  },
 }
 
 const Styles = {
