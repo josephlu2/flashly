@@ -6,8 +6,19 @@ const mongoose = require('mongoose')
 const setRoutes = require('./routes/sets.js')
 const userRoutes = require('./routes/user.js')
 
+// require cors
+const cors = require('cors')
+
+var corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
+  }
+
 // express app
 const app = express()
+
+// enable middleware
+app.use(cors(corsOptions))
 
 // middleware
 app.use(express.json())
