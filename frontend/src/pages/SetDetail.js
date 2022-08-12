@@ -21,7 +21,7 @@ const SetDetail = () => {
     const navigate = useNavigate();
     useEffect(() => {
         const fetchSet = async () => {
-            const response = await fetch('/api/sets/' + id, {
+            const response = await fetch('https://quizzleapi.ml/api/sets/' + id, {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }

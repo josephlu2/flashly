@@ -74,7 +74,7 @@ const SetForm = () => {
     
         const set = {title, desc, cards}
         
-        const response = await fetch('/api/sets', {
+        const response = await fetch('https://quizzleapi.ml/api/sets', {
           method: 'POST',
           body: JSON.stringify(set),
           headers: {

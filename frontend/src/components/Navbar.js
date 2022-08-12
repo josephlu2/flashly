@@ -42,7 +42,7 @@ export default function Navbar(props) {
             
           )}
           {!user && (
-            <div>
+            <Flex>
               <Link to="/login">
                 <Button variant="solid" colorScheme = "pink" mr = "4">Login</Button>
               </Link>
@@ -50,7 +50,7 @@ export default function Navbar(props) {
               <Link to="/signup">
                 <Button variant="solid" colorScheme = "pink">Signup</Button>
               </Link>
-            </div>
+            </Flex>
           )}
           </Flex>
     </Flex>

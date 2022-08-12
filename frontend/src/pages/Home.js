@@ -13,7 +13,7 @@ const Home = () => {
     
     useEffect(() => {
         const fetchSets = async () => {
-            const response = await fetch('/api/sets', {
+            const response = await fetch('https://quizzleapi.ml/api/sets', {
                 headers: {
                     'Authorization': `Bearer ${user.token}`
                 }

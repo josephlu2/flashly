@@ -14,7 +14,7 @@ const SetDetails = ({ set }) => {
             return
         }
 
-        const response = await fetch('/api/sets/' + set._id, {
+        const response = await fetch('https://quizzleapi.ml/api/sets/' + set._id, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${user.token}`
