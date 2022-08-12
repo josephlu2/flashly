@@ -9,6 +9,7 @@ import Navbar from './components/Navbar'
 import SetDetail from './pages/SetDetail'
 import CreateSet from './pages/CreateSet'
 import ModeFlashcard from './pages/modes/ModeFlashcard'
+import ModeWrite from './pages/modes/ModeWrite'
 
 function App() {
   const { user } = useAuthContext()
@@ -30,6 +31,10 @@ function App() {
             <Route 
               path = "/signup"
               element = {!user ? <Signup /> : <Navigate to="/"/>}
+            />
+            <Route 
+              path = '/sets/:id/write'
+              element = {user ? <ModeWrite />  : <ModeWrite />}
             />
             <Route 
               path = '/sets/:id/flashcard'
