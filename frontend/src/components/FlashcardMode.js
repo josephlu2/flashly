@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import ReactCardFlip from 'react-card-flip'
 
-export const Flashcard = ({ dataSource = [], flipDirection, onSound, onChange, onFinish }) => {
+export const FlashcardMode = ({ dataSource = [], flipDirection, onSound, onChange, onFinish }) => {
   const [step, setStep] = useState(1)
   const [side, setSide] = useState("front")
   const [isFinish, setIsFinish] = useState(false)
@@ -22,6 +22,7 @@ export const Flashcard = ({ dataSource = [], flipDirection, onSound, onChange, o
 
   const handleNext = () => {
     const max = dataSource.length
+    setIsFinish(step + 1 > max)
     const nextStep = step < max ? step + 1 : max
     setSide("front")
     setStep(nextStep)
@@ -212,4 +213,4 @@ const Styles = {
   },
 }
 
-export default Flashcard
+export default FlashcardMode

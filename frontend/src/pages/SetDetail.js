@@ -5,6 +5,12 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { useEffect, useState } from 'react'
 import Flashcard from '../components/Flashcard'
 import ModeSelect from "../components/ModeSelect";
+import {
+    Flex,
+    Heading,
+    Box,
+    Spacer,
+  } from "@chakra-ui/react";
 
 const SetDetail = () => {
     const { id } = useParams();
@@ -44,18 +50,47 @@ const SetDetail = () => {
         
         <div className="individual-set">
             {set && (
-                <div className="set-details-container">
-                    <h2>{set.title}</h2>
-                    <h3>{set.desc}</h3>
-                    <div className = "flashcards-row">
-                        <div className = "flashcard">
-                            <Flashcard dataSource = {cards}/>
-                        </div>
-                        <div className = "modes">
-                            <ModeSelect />
-                        </div>
-                    </div>
-                </div>
+
+                    <Flex flexDir="column" mb = "50" mt = "2">
+                        <Box flex="1" p={4}>
+                            <Heading as="h3" size="2xl">{set.title}</Heading>
+                            <Heading as='h4' size='md' pt = "2">
+                                {set.desc}
+                            </Heading>
+                        </Box>
+
+                        <Flex>
+                            <Box flex="2" p="4">
+                                <Flashcard dataSource = {cards}/>
+                            </Box>
+                            <Box flex = "1" p = "4">
+                                <ModeSelect />
+                            </Box>
+                        </Flex>
+
+                        <Heading p = {8}>Terms: </Heading>
+
+                        <Flex flexDir = "column">
+                            {set.cards.map(({term, definition}) => (
+                                <Box bg = 'gray.200'  borderRadius = "10" p ={4} ml = {8} mr = {8} mb = {2} >
+                                    <Flex>
+                                        <Box flex="1">
+                                            <Heading as="h4" size="md">{term}</Heading>
+                                        </Box>
+
+                                        <Spacer />
+                                        
+                                        <Box flex = "2">
+                                            <Heading fontWeight = "450" as="h4" size="md">{definition}</Heading>
+                                        </Box>
+                                    </Flex>
+                                </Box>
+                            ))}
+                        </Flex>
+
+                    </Flex>
+
+                
             )}
             
         </div>
