@@ -31,14 +31,14 @@ export default function Navbar(props) {
         </Heading>
         </Link>
         <Spacer />
-        <Flex pr = "5" pt = "1">
+        <Flex  pr = "5" pt = "1">
           {user && (
-            <div>
+            <Flex>
               <Link to="/create">
                 <Button variant="solid" colorScheme = "green">Create Set</Button>
               </Link>
               <Button variant="solid" colorScheme = "pink" ml = "5" onClick = {handleClick}>Log out</Button>
-            </div>
+            </Flex>
             
           )}
           {!user && (

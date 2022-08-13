@@ -47,22 +47,23 @@ const SetDetail = () => {
         
         <div className="individual-set">
             {set && (
-
                     <Flex flexDir="column" mb = "50" mt = "2">
-                        <Box flex="1" p={4} pl = "8">
-                            <Heading as="h3" size="2xl">{set.title}</Heading>
-                            <Heading as='h4' size='md' pt = "2">
-                                {set.desc}
-                            </Heading>
-                        </Box>
+                        <Flex flexDir = "column">
+                            <Box flex="1" p={4} pl = "8">
+                                <Heading as="h3" size="2xl">{set.title}</Heading>
+                                <Heading as='h4' size='md' pt = "2">
+                                    {set.desc}
+                                </Heading>
+                            </Box>
 
-                        <Flex>
-                            <Box flex="2" p="4">
-                                <Flashcard dataSource = {cards}/>
-                            </Box>
-                            <Box flex = "1" p = "4">
-                                <ModeSelect />
-                            </Box>
+                            <Flex wrap = "wrap" flex = "1">
+                                <Box flex="2" p="4">
+                                    <Flashcard dataSource = {cards}/>
+                                </Box>
+                                <Box flex = "1" p = "4">
+                                    <ModeSelect />
+                                </Box>
+                            </Flex>
                         </Flex>
 
                         <Heading p = {8}>Terms: </Heading>

@@ -134,9 +134,9 @@ const ModeWrite = () => {
                                 onChange={handleChange}
                                 placeholder={solution}
                             ></Input>
-                            <Box mt = "5">
+                            <Box mt = "5" w = {{ base: '175px', md: '400px', lg: '500px' }}>
                                 <Button colorScheme='green' onClick = {handleClick}>Submit</Button>
-                                <Button colorScheme='yellow' ml = "5" mr = "5" onClick = {handleHintClick}>Hint</Button>
+                                <Button mb = "2" mt = "2"colorScheme='yellow' ml = "5" mr = "5" onClick = {handleHintClick}>Hint</Button>
                                 <Button colorScheme="red" onClick = {handleSolutionClick}>Show Solution</Button>
                             </Box>
                         </Box>
