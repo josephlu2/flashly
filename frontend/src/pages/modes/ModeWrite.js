@@ -7,10 +7,17 @@ import {
     Heading,
     Box,
     Spacer,
-    Button
+    Button,
+    Input,
+    Text,
+    Switch,
+    Stack,
+    useToast
   } from "@chakra-ui/react";
 
 const ModeWrite = () => {
+    const toast = useToast()
+
     const {sets, dispatch} = useSetsContext()
     const {user, dispatch: authDispatch} = useAuthContext()
     const { id } = useParams();
@@ -18,6 +25,13 @@ const ModeWrite = () => {
     const [cards, setCards] = useState(null)
     const [current, setCurrent] = useState(0)
     const [title, setTitle] = useState('')
+    const [value, setValue] = useState('')
+    const [score, setScore] = useState(0)
+    const [solution, setSolution] = useState('Enter Answer Here')
+    const [stillPlaying, setStillPlaying] = useState(true)
+    const [firstTimeCorrect, setFirstTimeCorrect] = useState(true)
+    const [options, setOptions] = useState(false)
+    const handleChange = (event) => setValue(event.target.value)
     
 
     useEffect(() => {
@@ -48,26 +62,104 @@ const ModeWrite = () => {
     }, [cards, current])
 
     const handleClick = (e) => {
-        //if current is less than cards.length - 1, set current to current + 1
-        if (current < cards.cards.length - 1) {
-            setCurrent(current + 1)
-        } else {
-            //END GAME CONDITIONS
-        }
+            if (value === cards.cards[current].definition) {
+                if (solution === 'Enter Answer Here' && firstTimeCorrect) {
+                    setScore(score + 1)
+                }
+                if (current < cards.cards.length - 1) {
+                    setCurrent(current + 1)
+                }
+                setValue('')
+                setSolution('Enter Answer Here')
+                setFirstTimeCorrect(true)
+            } else {
+                toast({
+                    title: `Incorrect Answer - Try Again`,
+                    position: 'top',
+                    isClosable: false,
+                    status: 'error',
+                    duration: 1500,
+                  })
+                  setFirstTimeCorrect(false)
+            }
+
+            if (current === cards.cards.length - 1) {
+                setStillPlaying(false)
+                console.log('won')
+            }
+
+
         console.log(current)
     }
 
-    
+    const handleHintClick = (e) => {
+        console.log('hint')
+    }
+
+    const handleSolutionClick = (e) => {
+        console.log('solution')
+        setSolution(cards.cards[current].definition)
+    }
+
+    const handleOptionsClick = (e) => {
+        setOptions(!options)
+    }
 
 
     return (
-        <Flex align="center" justify="center">
+        <Flex align="center" justify="center" w = "100%">
             {cards && (
-                <Box>
-                    <h1>{cards.title}</h1>
-                    <h1>{title}</h1>
-                    <Button onClick = {handleClick}>Test</Button>
+                <Box flex = "1" align = "center" justify = "center" mt = "10">
+
+                    {!stillPlaying && (<h1>Game Over</h1>)}
+
+                    {stillPlaying && (
+                    <Flex flexDir = "column">
+                        <Box mb = "10">
+                            <Heading size='2xl'>Write Mode</Heading>
+                        </Box>
+
+                        <Box bg = "gray.200" pt = "5" pb = "5" w = "75%" borderRadius = "10">
+                            <Heading pb = "5" size='xl'>{title}</Heading>
+                            <Input
+                                bg = "white"
+                                borderColor='pink.400'
+                                focusBorderColor='pink.400'
+                                _hover={{
+                                    borderColor: 'pink.400'
+                                  }}
+                                borderWidth="2px"
+                                w = "75%"
+                                value={value}
+                                onChange={handleChange}
+                                placeholder={solution}
+                            ></Input>
+                            <Box mt = "5">
+                                <Button colorScheme='green' onClick = {handleClick}>Submit</Button>
+                                <Button colorScheme='yellow' ml = "5" mr = "5" onClick = {handleHintClick}>Hint</Button>
+                                <Button colorScheme="red" onClick = {handleSolutionClick}>Show Solution</Button>
+                            </Box>
+                        </Box>
+
+                        <Box mt = "5">
+                            <Text>Current Score: {score} / {cards.cards.length}</Text>
+                        </Box>
+                    </Flex>
+                    )}
+
+                    <Box>
+                        <Button mt = "5" onClick = {handleOptionsClick}>{!options ? "Show Options" : "Hide Options"}</Button>
+                        {options && (
+                            <Stack>
+                                <Text>Answer Terms</Text>
+                                <Switch></Switch>
+                            </Stack>
+                        )}
+                        
+                    </Box>
+
                 </Box>
+                
             )}
         </Flex>
     )
