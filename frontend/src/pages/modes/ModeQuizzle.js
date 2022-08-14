@@ -116,7 +116,7 @@ const ModeQuizzle = () => {
         if (current) {
             return (
                 <Box bg = "gray.100" w = "50%" borderRadius = "10" mt = "10">
-                    <Heading pt = "5" as="h1" size="md">Click the matching definition:</Heading>
+                    <Heading pt = "5" as="h1" size="md">Click the matching term:</Heading>
                     <Heading as="h1" size="xl">{current.term}</Heading>
                     <Box display = "flex" flexDirection = "column" justifyContent = "space-between" mt = "10">
                         {answerChoices.map((choice, index) => {
@@ -127,7 +127,9 @@ const ModeQuizzle = () => {
                                 console.log(len)
                                 return (
                                     <Button
-                                    m = "5" 
+                                    ml = "5" 
+                                    mr = "2"
+                                    mb = "5"
                                     p="40px"
                                     style={{
                                          whiteSpace: "normal",
@@ -142,7 +144,9 @@ const ModeQuizzle = () => {
                             } else {
                                 return (
                                     <Button 
-                                        m = "5" 
+                                        ml = "5" 
+                                        mr = "2"
+                                        mb = "5"
                                         p="40px"
                                         style={{
                                             whiteSpace: "normal",
@@ -210,9 +214,9 @@ const ModeQuizzle = () => {
                             {!gameover && (gamemode === "quiz") && <Quiz />}
                             {!gameover && (gamemode === "flashcard") && <Button onClick = {handleNextClick} mt = "10">Next Term</Button>}
                             {gameover && (
-                                <Flex mt = "5" justify = "center" align = "center" flexDir = "column">
+                                <Flex mt = "5" flexDir = "column">
                                     <Heading size='2xl'>Great work!</Heading>
-                                    <Button mt = "10" colorScheme = "green" size = "lg" onClick = {() => navigate(-1)}>Return to Set</Button>
+                                    <Button mt = "10" w = "25%" colorScheme = "green" size = "lg" onClick = {() => navigate(-1)}>Return to Set</Button>
                                 </Flex>
                             )}
                         </Box>

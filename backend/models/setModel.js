@@ -18,6 +18,14 @@ const setSchema = new Schema({
     user_id: {
         type: String,
         required: true
+    },
+    visibility: {
+        type: Boolean, // true = public, false = private
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
     }
 }, { timestamps: true})
 

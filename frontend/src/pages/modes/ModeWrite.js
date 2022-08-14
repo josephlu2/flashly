@@ -12,7 +12,8 @@ import {
     Text,
     Switch,
     Stack,
-    useToast
+    useToast,
+    HStack
   } from "@chakra-ui/react";
 
 const ModeWrite = () => {
@@ -32,6 +33,7 @@ const ModeWrite = () => {
     const [firstTimeCorrect, setFirstTimeCorrect] = useState(true)
     const [options, setOptions] = useState(false)
     const handleChange = (event) => setValue(event.target.value)
+    const [answerState, setAnswerState] = useState(false)
     
 
     useEffect(() => {
@@ -44,7 +46,7 @@ const ModeWrite = () => {
             const json = await response.json()
 
             if (response.ok) {
-                setCards(json)
+                setCards(json.cards)
                 console.log(cards)
             } else {
                 navigate('/')
@@ -57,16 +59,16 @@ const ModeWrite = () => {
 
     useEffect(() => {
         if (cards) {
-            setTitle(cards.cards[current].term)
+            setTitle(cards[current].term)
         }
     }, [cards, current])
 
     const handleClick = (e) => {
-            if (value === cards.cards[current].definition) {
+            if (value === cards[current].definition) {
                 if (solution === 'Enter Answer Here' && firstTimeCorrect) {
                     setScore(score + 1)
                 }
-                if (current < cards.cards.length - 1) {
+                if (current < cards.length - 1) {
                     setCurrent(current + 1)
                 }
                 setValue('')
@@ -83,7 +85,7 @@ const ModeWrite = () => {
                   setFirstTimeCorrect(false)
             }
 
-            if (current === cards.cards.length - 1) {
+            if (current === cards.length - 1) {
                 setStillPlaying(false)
                 console.log('won')
             }
@@ -94,15 +96,35 @@ const ModeWrite = () => {
 
     const handleHintClick = (e) => {
         console.log('hint')
+        setValue('')
+        setSolution(cards[current].definition.slice(0, cards[current].definition.length / 3) + ''.padEnd(cards[current].definition.length / 3 * 2, '_'))
     }
 
     const handleSolutionClick = (e) => {
-        console.log('solution')
-        setSolution(cards.cards[current].definition)
+        setValue('')
+        setSolution(cards[current].definition)
     }
 
     const handleOptionsClick = (e) => {
         setOptions(!options)
+    }
+
+    const handleSwitchChange = (e) => {
+        //map through cards and set each card's term to the definition and vice versa
+        setAnswerState(!answerState)
+        setCards(cards.map(card => {
+            return {
+                term: card.definition,
+                definition: card.term
+            }
+        }
+        ))
+    }
+
+    const handleSwitchRandomChange = (e) => {
+        //shuffle cards
+        setCards(cards.sort(() => Math.random() - 0.5))
+        setTitle(cards[current].term)
     }
 
 
@@ -142,7 +164,7 @@ const ModeWrite = () => {
                         </Box>
 
                         <Box mt = "5">
-                            <Text>Current Score: {score} / {cards.cards.length}</Text>
+                            <Text>Current Score: {score} / {cards.length}</Text>
                         </Box>
                     </Flex>
                     )}
@@ -150,9 +172,18 @@ const ModeWrite = () => {
                     <Box>
                         <Button mt = "5" onClick = {handleOptionsClick}>{!options ? "Show Options" : "Hide Options"}</Button>
                         {options && (
-                            <Stack>
-                                <Text>Answer Terms</Text>
-                                <Switch></Switch>
+                            <Stack mt = "5" bg = "gray.100" w = "30%" borderRadius = "10">
+                                <HStack justify = "center">
+                                    <Stack mr = "10">
+                                        <Text pt = "5">Answer Terms</Text>
+                                        <Switch pb = "5" isChecked = {answerState} onChange = {handleSwitchChange} ></Switch>
+                                    </Stack>
+                                    <Stack ml = "10">
+                                        <Text pt = "5">Uppercase Check</Text>
+                                        <Switch pb = "5" isChecked = {answerState} onChange = {handleSwitchChange} ></Switch>
+                                    </Stack>
+                                </HStack>
+                                <Button mb = "5" colorScheme='teal' variant='solid'  onClick = {handleSwitchRandomChange} >Click to Randomize</Button>
                             </Stack>
                         )}
                         
