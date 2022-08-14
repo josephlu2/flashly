@@ -44,7 +44,8 @@ const ModeFlashcard = () => {
             <Box w = "75%" flex = "0.8">
                 {cards && (<FlashcardMode dataSource = {modifiedCards ? modifiedCards : cards}/>)}
             </Box>
-            {false &&  (<Box>
+            {false &&  (
+            <Box>
                 <Heading>Options (WIP)</Heading>
                 <Stack direction='column'>
                     <Text>Shuffle cards:</Text>
@@ -54,7 +55,8 @@ const ModeFlashcard = () => {
                     <Text>Flip cards:</Text>
                     <Switch isChecked = { flipCards } onChange={e => setflipCards(e.target.checked)} colorScheme='teal' size='lg' />
                 </Stack>
-            </Box>)}
+            </Box>
+            )}
             
         </Flex>
     )

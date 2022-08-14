@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext'
 
 //pages & components
@@ -10,13 +10,14 @@ import SetDetail from './pages/SetDetail'
 import CreateSet from './pages/CreateSet'
 import ModeFlashcard from './pages/modes/ModeFlashcard'
 import ModeWrite from './pages/modes/ModeWrite'
+import ModeQuizzle from './pages/modes/ModeQuizzle'
 
 function App() {
   const { user } = useAuthContext()
 
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <Navbar />
         <div className="pages">
           <Routes>
@@ -41,6 +42,10 @@ function App() {
               element = {user ? <ModeFlashcard />  : <ModeFlashcard />}
             />
             <Route 
+              path = '/sets/:id/quizzle'
+              element = {user ? <ModeQuizzle />  : <ModeQuizzle />}
+            />
+            <Route 
               path = '/sets/:id'
               element = {user ? <SetDetail />  : <SetDetail />}
             />
@@ -52,7 +57,7 @@ function App() {
             
           </Routes>
         </div>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
