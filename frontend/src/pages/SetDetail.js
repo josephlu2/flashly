@@ -1,6 +1,6 @@
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useCurrentSetContext } from "../hooks/useCurrentSetContext"
-import { useParams, Navigate, useNavigate } from "react-router-dom";
+import { useParams, Navigate, useNavigate, Link } from "react-router-dom";
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { useEffect, useState } from 'react'
 import Flashcard from '../components/Flashcard'
@@ -38,6 +38,7 @@ const SetDetail = () => {
             } else {
                 navigate('/')
             }
+
         }
 
         fetchSet()
@@ -71,7 +72,7 @@ const SetDetail = () => {
                         <Flex p = {8}>
                             <Heading>Terms: </Heading>
                             <Spacer />
-                            <Button variant='outline' colorScheme = "pink">Edit Set</Button>
+                            {set.owner && <Link to="./edit"><Button variant='outline' colorScheme = "pink">Edit Set</Button></Link>}
                         </Flex>
 
                         <Flex flexDir = "column">
