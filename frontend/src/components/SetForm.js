@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useSetsContext } from '../hooks/useSetsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useNavigate } from "react-router-dom";
-import { VStack, Flex, Spacer, Divider, Button, Box, FormControl, FormInput, Input, FormLabel, Heading, useToast } from '@chakra-ui/react';
+import { VStack, Flex, Spacer, Divider, Button, Box, FormControl, FormInput, Input, FormLabel, Heading, useToast, Select } from '@chakra-ui/react';
 
 const SetForm = () => {
 
@@ -12,7 +12,9 @@ const SetForm = () => {
     const toast = useToast()
 
     const [title, setTitle] = useState('')
+    const [category, setCategory] = useState('')
     const [desc, setDesc] = useState('')
+    const [visibility, setVisibility] = useState(true)
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
     const [cards, setCards] = useState([{ term: "", definition: "" }]);
@@ -72,7 +74,7 @@ const SetForm = () => {
           return
         }
     
-        const set = {title, desc, cards}
+        const set = {title, desc, cards, visibility, category}
         
         const response = await fetch('https://quizzleapi.ml/api/sets', {
           method: 'POST',
@@ -99,6 +101,7 @@ const SetForm = () => {
           setError(null)
           setTitle('')
           setDesc('')
+          setCategory('')
           setCards([{ term: "", definition: "" }])
           setEmptyFields([])
           console.log('new set added:', json)
@@ -113,7 +116,7 @@ const SetForm = () => {
           <Box width = "75%" mb = "100" pt = "10">
             <Heading mb = "5">Create a New Set</Heading>
             <FormControl isRequired>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Set Title</FormLabel>
               <Input 
                 placeholder='Title' 
                 type="text" 
@@ -123,7 +126,7 @@ const SetForm = () => {
               />
             </FormControl>
             <FormControl isRequired>
-              <FormLabel pt = "4">Description</FormLabel>
+              <FormLabel pt = "4">Set Description</FormLabel>
               <Input 
                 placeholder='Description' 
                 type="text" 
@@ -131,6 +134,23 @@ const SetForm = () => {
                 value = {desc}
                 className = {emptyFields.includes('desc') ? 'error' : ''}
               />
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel pt = "4">Category</FormLabel>
+              <Input 
+                placeholder='Category' 
+                type="text" 
+                onChange = {(e) => setCategory(e.target.value)} 
+                value={category}
+                className = {emptyFields.includes('title') ? 'error' : ''}
+              />
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel pt = "4">Visibility</FormLabel>
+              <Select value = {visibility} onChange = {(e) => setVisibility(e.target.value)}>
+                <option value='true'>Public</option>
+                <option value='false'>Private</option>
+              </Select>
             </FormControl>
             <FormControl isRequired>
             <FormLabel pt = "4">Cards:</FormLabel>

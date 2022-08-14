@@ -11,6 +11,7 @@ import CreateSet from './pages/CreateSet'
 import ModeFlashcard from './pages/modes/ModeFlashcard'
 import ModeWrite from './pages/modes/ModeWrite'
 import ModeQuizzle from './pages/modes/ModeQuizzle'
+import EditSet from './pages/EditSet'
 
 function App() {
   const { user } = useAuthContext()
@@ -32,6 +33,10 @@ function App() {
             <Route 
               path = "/signup"
               element = {!user ? <Signup /> : <Navigate to="/"/>}
+            />
+            <Route 
+              path = '/sets/:id/edit'
+              element = {user ? <EditSet />  : <EditSet />}
             />
             <Route 
               path = '/sets/:id/write'

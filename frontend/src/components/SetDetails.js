@@ -50,7 +50,7 @@ const SetDetails = ({ set }) => {
                     fontWeight="700"
                     rounded="md"
                 >
-                    CATEGORY
+                    {set.category}
                 </Link>
                 <span className = "material-symbols-outlined" onClick = {handleClick}>delete</span>
                 </Flex>
@@ -82,7 +82,7 @@ const SetDetails = ({ set }) => {
                     _dark={{ color: "brand.400" }}
                     _hover={{ textDecor: "underline" }}
                 >
-                    Created {formatDistanceToNow(new Date(set.createdAt), { addSuffix: true},)} by AUTHOR NAME
+                    Created {formatDistanceToNow(new Date(set.createdAt), { addSuffix: true},)}
                 </Link>
                 </Flex>
             </Box> 

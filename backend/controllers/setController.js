@@ -20,6 +20,8 @@ const getSet = async (req, res) => {
     }
 
     const set = await Set.findById(id)
+    //convert set to object
+    const setObject = set.toObject()
 
     if (!set) {
         return res.status(404).json({error: 'No such set'})
@@ -29,7 +31,14 @@ const getSet = async (req, res) => {
         return res.status(401).json({error: 'Unauthorized'})
     }
 
-    res.status(200).json(set)
+    if (set.user_id.toString() === req.user._id.toString()) {
+        setObject.owner = true
+        console.log('same')
+    } else {
+        setObject.owner = false
+    }
+
+    res.status(200).json(setObject)
 }
 
 

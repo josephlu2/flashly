@@ -10,6 +10,7 @@ import {
     Heading,
     Box,
     Spacer,
+    Button
   } from "@chakra-ui/react";
 
 const SetDetail = () => {
@@ -18,6 +19,7 @@ const SetDetail = () => {
     const { user } = useAuthContext()
     const [ set, setSet ] = useState(null)
     const [ cards, setCards ] = useState([])
+    const [ owner, setOwner ] = useState(false)
     const navigate = useNavigate();
     useEffect(() => {
         const fetchSet = async () => {
@@ -66,7 +68,11 @@ const SetDetail = () => {
                             </Flex>
                         </Flex>
 
-                        <Heading p = {8}>Terms: </Heading>
+                        <Flex p = {8}>
+                            <Heading>Terms: </Heading>
+                            <Spacer />
+                            <Button variant='outline' colorScheme = "pink">Edit Set</Button>
+                        </Flex>
 
                         <Flex flexDir = "column">
                             {set.cards.map(({term, definition}) => (
@@ -87,7 +93,6 @@ const SetDetail = () => {
                         </Flex>
 
                     </Flex>
-
                 
             )}
             
