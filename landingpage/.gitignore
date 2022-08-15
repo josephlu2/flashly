@@ -1,0 +1,12 @@
+# Created by https://www.toptal.com/developers/gitignore/api/gatsby
+# Edit at https://www.toptal.com/developers/gitignore?templates=gatsby
+
+### Gatsby ###
+node_modules/
+
+.cache/
+public
+
+src/gatsby-types.d.ts
+
+# End of https://www.toptal.com/developers/gitignore/api/gatsby
