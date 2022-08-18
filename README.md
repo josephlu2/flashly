@@ -29,11 +29,12 @@ Dillinger uses a number of libraries/technologies to work properly:
 - Express
 - MongoDB / Mongoose
 - JWT
+- and many more...
 
 
 ## Installation
 
-Flashly requires Node and React to run.
+Flashly requires Node, React, and MongoDB to run.
 
 Install the dependencies and dev Dependencies and start the two servers.
 
